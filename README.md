@@ -65,26 +65,25 @@ Ensure you have the following installed:
 
 ## Screenshots
 
-- **Login Page**
-  ![Screenshot From 2025-03-24 12-49-01](https://github.com/user-attachments/assets/f56cb254-2d33-47be-bc24-e18c8a6dad47)
+![Screenshot From 2025-03-24 12-49-01](https://github.com/user-attachments/assets/f56cb254-2d33-47be-bc24-e18c8a6dad47)
 
-- **Home Page Navigation**
 ![Screenshot From 2025-03-24 12-49-12](https://github.com/user-attachments/assets/4f893388-7dcc-400c-91bf-374786183a11)
 
-- **Weather Forecast Module**
+![Screenshot From 2025-03-24 12-49-18](https://github.com/user-attachments/assets/b98d8284-e1ea-4508-92f7-1349bab450f0)
+
 ![Screenshot From 2025-03-24 13-16-06](https://github.com/user-attachments/assets/f804f117-9e71-41e2-a144-e1fc6c9b1674)
 
-- **Fertilizer Calculator**
 ![Screenshot From 2025-03-24 13-16-33](https://github.com/user-attachments/assets/6486e5b9-d61f-4e8d-bc27-4bbece4b0fd8)
 
-- **Crop Disease**
 ![Screenshot From 2025-03-24 13-17-03](https://github.com/user-attachments/assets/675e43a1-93f0-49a3-b236-267dcd30e109)
 
-- **Market Price Information**
 ![Screenshot From 2025-03-24 12-49-48](https://github.com/user-attachments/assets/44c88f81-a5af-4156-9b56-f08d85d7d16d)
 
-- **Government Scheme Details**
+![Screenshot From 2025-03-24 12-50-56](https://github.com/user-attachments/assets/11f29629-7978-4e76-927e-fd1ea9d895c3)
+
 ![Screenshot From 2025-03-24 12-49-53](https://github.com/user-attachments/assets/7f9590cc-c425-42c4-8daf-b7388e9e941d)
+
+![Screenshot From 2025-03-24 12-49-57](https://github.com/user-attachments/assets/e2c823ce-2c19-475d-8d5e-2eb0a88936c5)
 
 
 ## Contribution
