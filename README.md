@@ -3,6 +3,13 @@
 ## Overview
 The **Digital Farming Platform** is a comprehensive solution designed to assist smallholder farmers in managing their agricultural activities efficiently. The platform provides access to real-time weather updates, crop management tools, market price insights, and government farming schemes. By integrating modern technology with traditional farming practices, it enhances productivity and profitability for farmers.
 
+**Contributors**
+
+We would like to thank the following people for their valuable contributions:
+
+    Adesh Tiwari 
+    Sana Sayyad 
+
 ## Features
 - **Weather Forecasting:** Get real-time weather updates and alerts.
 - **Fertilizer Calculator:** Calculate the right amount of fertilizer based on crop needs.
