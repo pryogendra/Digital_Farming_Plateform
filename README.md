@@ -58,6 +58,32 @@ Ensure you have the following installed:
 - Navigate through different modules to access features like weather updates, market prices, crop recommendations, and financial planning.
 - Use the chatbot for quick farming-related inquiries.
 
+## Screenshots
+To enhance user understanding, you can add screenshots for each module:
+
+- **Login Page**
+  ![Login Page](screenshots/login.png)
+
+- **Home Page Navigation**
+  ![Home Page](screenshots/home.png)
+
+- **Weather Forecast Module**
+  ![Weather Screen](screenshots/weather.png)
+
+- **Fertilizer Calculator**
+  ![Fertilizer Calculator](screenshots/fertilizer.png)
+
+- **Crop Disease Detection**
+  ![Crop Diseases](screenshots/diseases.png)
+
+- **Market Price Information**
+  ![Market Price](screenshots/market.png)
+
+- **Government Scheme Details**
+  ![Government Schemes](screenshots/schemes.png)
+
+Ensure the images are stored in the `screenshots/` directory of your repository.
+
 ## Contribution
 We welcome contributions! Follow these steps to contribute:
 1. Fork the repository.
