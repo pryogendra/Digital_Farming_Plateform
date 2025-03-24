@@ -95,12 +95,6 @@ We welcome contributions! Follow these steps to contribute:
 4. Push the branch (`git push origin feature-name`).
 5. Open a pull request.
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contact
-For queries and support, contact me.
-
 ---
 We appreciate your support and hope this platform makes a significant impact in digital farming!
 
