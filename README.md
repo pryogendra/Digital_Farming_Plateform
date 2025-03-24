@@ -32,7 +32,7 @@ Ensure you have the following installed:
 
 **Backend Django Server(Web Server)**
   ```sh
-   git clone https://github.com/pryogendra/Digital_Farming_Plateform.git
+   git clone https://github.com/pryogendra/CropCareServer.git
    ```
 
 ### Steps to Run Locally
