@@ -1,0 +1,50 @@
+{
+    "artstation_art": {
+      "avatar": "/home/pryog/TY_Project/assets/img1.jpg",
+      "post": "/home/pryog/TY_Project/assets/img2.jpeg",
+      "caption": "Beautiful Image",
+      "likes": "3100",
+      "comments": "1008",
+      "posted_ago": "22 hours"
+    },
+    "sonny_coder": {
+      "avatar": "/home/pryog/TY_Project/assets/img4.jpeg",
+      "post": "assets/img3.jpeg",
+      "caption": "Forests",
+      "likes": "6324",
+      "comments": "47",
+      "posted_ago": "2 days"
+    },
+    "devianprogrammer": {
+      "avatar": "/home/pryog/TY_Project/assets/img2.jpeg",
+      "post": "/home/pryog/TY_Project/assets/img5.jpeg",
+      "caption": "Water",
+      "likes": "2053",
+      "comments": "13",
+      "posted_ago": "20 hours"
+    },
+    "kivymd": {
+      "avatar": "/home/pryog/TY_Project/assets/img6.jpeg",
+      "post": "/home/pryog/TY_Project/assets/img2.jpeg",
+      "caption": "Mountains",
+      "likes": "121",
+      "comments": "45",
+      "posted_ago": "46 mins"
+    },
+    "abc": {
+      "avatar": "assets/img3.jpeg",
+      "post": "/home/pryog/TY_Project/assets/img6.jpeg",
+      "caption": "Ocean",
+      "likes": "58",
+      "comments": "4",
+      "posted_ago": "2 hours"
+    },
+    "insta": {
+      "avatar": "/home/pryog/TY_Project/assets/img6.jpeg",
+      "post": "/home/pryog/TY_Project/assets/img5.jpeg",
+      "caption": "Fields",
+      "likes": "10",
+      "comments": "1",
+      "posted_ago": "3 hours"
+    }
+  }

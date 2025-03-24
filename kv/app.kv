@@ -1,0 +1,1530 @@
+#:import CircularAvatarImage main.CircularAvatarImage
+#:import StoryCreator main.StoryCreator
+#:import PostCard main.PostCard
+
+MDScreenManager:
+    id:manager
+    StartUpScreen:
+        name:"startup"
+    LoginScreen:
+        name:"login"
+    SignupScreen:
+        name:"signup"
+    ForgetPasswordScreen:
+        name:"forgetpassword"
+    
+    WelcomeScreen:
+        name:"welcome"
+        MDBoxLayout:
+            orientation:'vertical'
+            MDTopAppBar:
+                id:topbar
+                title:"CropCare"
+                use_overflow: False
+                left_action_items:[["menu", lambda x: app.open_left_menu(x),"Menu"]]
+                right_action_items:
+                    [['chat',lambda x: app.open_right_menu(x),"Chat"],
+                    ['dots-vertical',lambda x: app.open_right_menu(x),"Info"]]
+                pos_hint:{'top':1}
+                size_hint: (1, None)
+                height: "90dp"
+            MDScreenManager:
+                id:screen_manager
+                HomeScreen:
+                    name: "home"
+                FertilizerScreen:
+                    name: "fertilizerscreen"
+                CropsDiseaseScreen:
+                    name: "CropsDiseaseScreen"
+                AlertScreen:
+                    name: "alertscreen"
+                SelectCrop:
+                    name:'SelectCrop'
+                CropDetails:
+                    name:'CropDetails'
+                WeatherInfo:
+                    name:'weatherinfo'
+                CropRecommendation:
+                    name:'croprecommendation'
+                SearchScreen:
+                    name:'searchscreen'
+                ShoppingScreen:
+                    name:'shoppingmain'
+                CreatePostScreen:
+                    name:'createpost'
+                ProductDetailScreen:
+                    name:'productdetail'
+                NotificationScreen:
+                    name:'notification'
+                MainSchemeDetailScreen:
+                    name:'mainscheme'
+                SchemeDetailScreen:
+                    name: "schemedetail"
+                ProfileMainScreen:
+                    name: "profile_main"
+                UpdateProfileScreen:
+                    name:"updateprofile"
+                ChatBox:
+                    name:"chat"
+                Budgeting:
+                    name:'budget'
+                HelpSupport:
+                    name:'helpsupport'
+                Setting:
+                    name:'settings'
+                FeedBack:
+                    name:'feedback'
+                ContactUs:
+                    name:'contactus'
+                LegalNotice:
+                    name:'legalnotice'
+                
+            MDBottomNavigation:
+                size_hint:(1,0.2)
+                MDBottomNavigationItem:
+                    name:'Screen1'
+                    icon:'home-circle'
+                    on_tab_press:screen_manager.current="home"
+                MDBottomNavigationItem:
+                    name:'Screen2'
+                    icon:'magnify'
+                    on_tab_press:screen_manager.current="searchscreen"
+                MDBottomNavigationItem:
+                    name:'Screen3'
+                    icon:'shopping'
+                    on_tab_press:screen_manager.current="shoppingmain"
+                MDBottomNavigationItem:
+                    name:'Screen5'
+                    icon:'alpha-g'
+                    on_tab_press:screen_manager.current="mainscheme"
+                MDBottomNavigationItem:
+                    name:'Screen6'
+                    icon:'account-circle'
+                    on_tab_press:screen_manager.current="profile_main"
+
+<StartUpScreen>:
+    name:"startup"
+    MDBoxLayout:
+        size:root.size
+        Image:
+            id:logo_image
+            source: "assets/logo_png.png"
+            allow_stretch:True
+            keep_ratio :False
+            opacity: 0
+
+<LoginScreen>:
+    name: "login"
+    MDBoxLayout:
+        size: root.size
+        md_bg_color: 0.96, 0.96, 0.96, 1
+        MDScreen:
+            MDCard:
+                size_hint: 0.8, 0.6
+                pos_hint: {"center_x": .5, "center_y": .5}
+                radius: 20
+                elevation: 1
+                md_bg_color: 1, 0.97,0.88,1  #card background
+                MDRelativeLayout:
+                    MDLabel:
+                        id: label
+                        text: "Cropcare"
+                        font_style: 'H6'
+                        font_size: 30
+                        halign: 'center'
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        padding_y: 15
+                        pos_hint: {'center_y': .9, 'center_x': 0.5}
+                        color: 0.1, 0.5, 0.1, 1  # Green text for "Cropcare"
+
+                    MDTextField:
+                        id: username
+                        hint_text: "Username"
+                        icon_right: 'account'
+                        size_hint: (0.8, 0.2)
+                        font_size: 18
+                        pos_hint: {'center_y': .68, 'center_x': 0.5}
+                        on_text: root.clear_error_message()
+                        helper_text: "Spaces are not allowed."
+                        line_color_focus: 0.3, 0.5, 0.9, 1  # Blue border focus
+                        line_color_normal: 0.8, 0.8, 0.8, 1  # Light gray normal line
+
+                    MDTextField:
+                        id: password
+                        hint_text: "Password"
+                        size_hint: (0.8, 0.2)
+                        password: root.password_eye
+                        font_size: 18
+                        pos_hint: {'center_y': .5, 'center_x': 0.5}
+                        on_text: root.clear_error_message()
+                        helper_text: "Password must be at least 8 characters"
+                        line_color_focus: 0.9, 0.5, 0.5, 1  # Red focus border
+                        line_color_normal: 0.8, 0.8, 0.8, 1  # Light gray normal line
+
+                    MDIconButton:
+                        icon: "eye-off" if root.password_eye else "eye"
+                        theme_text_color: "Hint"
+                        on_release: root.password_eye_visibility()
+                        pos_hint: {'center_y': .5, 'center_x': 0.85}
+                        md_bg_color: 0.5, 0.8, 0.5, 1  # Green button
+
+                    MDRectangleFlatButton:
+                        text: "Log In"
+                        font_size: 12
+                        pos_hint: {'center_y': .3, 'center_x': 0.5}
+                        on_press: root.login()
+                        size_hint: 0.7, 0.05
+                        md_bg_color: 0.1, 0.3, 0.8, 1  # Blue button
+                        text_color: 1, 1, 1, 1  # White text
+
+                    MDFlatButton:
+                        text: "Forget Password"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1  # Red text for "Forget Password"
+                        font_style: 'H6'
+                        font_size: 13
+                        pos_hint: {'center_y': .2, 'center_x': 0.5}
+                        on_release: root.forgetPassword()
+
+                    MDLabel:
+                        id: error_message
+                        text: ""
+                        font_style: 'H6'
+                        font_size: 14
+                        color: 1, 0, 0, 1  # Red error message
+                        pos_hint: {'center_y': .8, 'center_x': 0.65}
+
+                    MDLabel:
+                        text: "Doesn't have account?"
+                        font_style: 'H6'
+                        font_size: 13
+                        pos_hint: {'center_y': .1, 'center_x': 0.65}
+                        color: 0.3, 0.3, 0.3, 1  # Dark gray text for "Doesn't have account?"
+
+                    MDFlatButton:
+                        text: "Sign Up"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 1, 1  # Blue text for "Sign Up"
+                        font_style: 'H6'
+                        font_size: 13
+                        pos_hint: {'center_y': .1, 'center_x': 0.77}
+                        on_press: root.switch_to_signup()
+
+<ForgetPasswordScreen>:
+    name: "forgetpassword"
+    MDBoxLayout:
+        size: root.size
+        md_bg_color: 0.96,0.96,0.96,1
+        MDScreen:
+            MDCard:
+                size_hint: 0.7, 0.5
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                radius: 20
+                elevation: 1
+                md_bg_color: 1,0.97,0.88,1
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: [20, 20, 20, 20]                    
+                    MDLabel:
+                        id: label
+                        text: "Forgot Password"
+                        font_size: 25
+                        halign: 'center'
+                        size_hint_y: None
+                        pos_hint: {'center_y': .85, 'center_x': 0.5}
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+
+                    MDTextField:
+                        id: email
+                        hint_text: "Email"
+                        icon_left: 'email'
+                        size_hint_x: None
+                        width: 200
+                        font_size: 18
+                        helper_text: 'youremail@domain.name'
+                        helper_text_mode: 'on_error'
+                        line_color_focus: 0.3, 0.5, 0.9, 1 
+                        line_color_normal: 0.8, 0.8, 0.8, 1
+
+                    MDRectangleFlatButton:
+                        text: "Submit"
+                        text_color: 1, 1, 1, 1
+                        font_size: 14
+                        pos_hint: {'center_x': 0.5}
+                        size_hint: 0.7, 0.1
+                        md_bg_color: 0.1, 0.3, 0.8, 1 
+                        on_release: root.forget()
+
+                    MDFlatButton:
+                        text: "Login"
+                        theme_text_color: "Custom"
+                        text_color: 0.1, 0.5, 0.1, 1
+                        font_style: 'H6'
+                        font_size: 13
+                        pos_hint: {'center_y': .2, 'center_x': 0.5}
+                        on_release: root.go_back()
+
+                    Widget:
+
+<SignupScreen>:
+    name: "signup"
+    MDBoxLayout:
+        size: root.size
+        md_bg_color: 0.96, 0.96, 0.96, 1
+        MDScreen:
+            MDCard:
+                size_hint: 0.85, 0.5
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                elevation : 1
+                md_bg_color: 1, 0.97,0.88,1
+                MDBoxLayout:
+                    orientation:'vertical'
+                    spacing: '40dp'
+                    MDLabel:
+                        id: label
+                        text: "Register"
+                        font_size: 30
+                        halign: 'center'
+                        bold:True
+                        size_hint_y: None
+                        color: 0.1, 0.5, 0.1, 1
+                        padding_y: 15
+                        pos_hint: {'center_y': .9, 'center_x': 0.5}
+                    MDRelativeLayout:
+                        MDTextField:
+                            id: email
+                            hint_text: "Email"
+                            icon_left: 'email'
+                            size_hint_x: None
+                            width: 200
+                            font_size: 18
+                            pos_hint: {'center_y': .6, 'center_x': 0.5}
+                            helper_text:"youremail@domain.name"
+                    MDRectangleFlatButton:
+                        id:sign_up_button
+                        text: "Register"
+                        font_size: 12
+                        pos_hint: {'center_y': .18, 'center_x': 0.5}
+                        md_bg_color: 0.1, 0.3, 0.8, 1
+                        text_color: 1, 1, 1, 1
+                        on_press: root.signUp()
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Already have an account? "
+                            font_size: 12
+                            pos_hint: {'center_y': .1, 'center_x': 0.6}
+                        MDFlatButton:
+                            text: "Login"
+                            theme_text_color: "Custom"
+                            text_color: 0, 0, 1, 1
+                            font_style:'H6'
+                            font_size: 13
+                            pos_hint: {'center_y': .1, 'center_x': 0.83}
+                            on_press: root.manager.current="login"
+                    Widget:
+
+<WelcomeScreen>:
+    name:"welcome"
+
+<HomeScreen>:  
+    MDBoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            bar_width: 0
+            MDBoxLayout:
+                adaptive_height: True
+                orientation: 'vertical'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    adaptive_height: True
+                    spacing: dp(10)
+                    padding: dp(10)
+                    MDGridLayout:
+                        cols: 1
+                        padding: 8
+                        spacing: 10
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDCard:
+                            orientation: 'horizontal'
+                            size_hint_y: None
+                            height: '50dp'
+                            md_bg_color: 0.7, 0.90, 0.99, 1
+                            on_press: root.manager.current = 'weatherinfo'
+                            MDIconButton:
+                                size_hint_y: None
+                                height: '50dp'
+                                icon: 'weather-cloudy'
+                                on_press: root.manager.current = 'weatherinfo'
+                            MDLabel:
+                                text:"Get the Current Weather"
+
+                        MDSeparator:
+
+                        MDGridLayout:
+                            cols: 2
+                            size_hint_y: None
+                            height: '300dp'
+                            spacing: 12
+                            padding: 10
+
+                            MDCard:
+                                orientation: 'vertical'
+                                md_bg_color: 0.95, 0.95, 1, 1
+                                radius: [10]
+                                on_press: root.manager.current = 'fertilizerscreen'
+                                padding: dp(10)
+                                MDIcon:
+                                    icon: 'calculator'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                                    theme_text_color: "Custom"
+                                    text_color: 0.2, 0.6, 1, 1 
+                                MDLabel:
+                                    text: "Fertilizer Calculator"
+                                    halign: 'center'
+                                    font_size: '14sp'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.2}
+                                    theme_text_color: "Custom"
+                                    text_color: 0.2, 0.6, 1, 1
+
+                            MDCard:
+                                orientation: 'vertical'
+                                md_bg_color: 0.98, 0.85, 0.75, 1  
+                                radius: [10]
+                                on_press: root.manager.current = 'CropsDiseaseScreen'
+                                padding: dp(10)
+                                MDIcon:
+                                    icon: 'bug'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 0.4, 0, 1  
+                                MDLabel:
+                                    text: "Crops Diseases"
+                                    halign: 'center'
+                                    font_size: '14sp'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.2}
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 0.4, 0, 1  
+
+                            MDCard:
+                                orientation: 'vertical'
+                                md_bg_color: 0.85, 1, 0.75, 1 
+                                radius: [10]
+                                on_press: root.manager.current = 'SelectCrop'
+                                padding: dp(10)
+                                MDIcon:
+                                    icon: 'seed-outline'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                                    theme_text_color: "Custom"
+                                    text_color: 0, 0.7, 0, 1  
+                                MDLabel:
+                                    text: "Cultivation Tips"
+                                    halign: 'center'
+                                    font_size: '14sp'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.2}
+                                    theme_text_color: "Custom"
+                                    text_color: 0, 0.7, 0, 1 
+
+                            MDCard:
+                                orientation: 'vertical'
+                                md_bg_color: 0.95, 0.9, 0.75, 1
+                                radius: [10]
+                                on_press: root.manager.current = 'alertscreen'
+                                padding: dp(10)
+                                MDIcon:
+                                    icon: 'alert-circle'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 0.8, 0, 1
+                                MDLabel:
+                                    text: "Crop Disease Solutions"
+                                    halign: 'center'
+                                    font_size: '14sp'
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.1}
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 0.8, 0, 1
+                        MDSeparator:
+                        MDCard:
+                            orientation: 'horizontal'
+                            size_hint_y: None
+                            height: '50dp'
+                            md_bg_color: 0, 0.90, 0.99, 1
+                            on_press: root.manager.current = 'croprecommendation'
+                            MDIconButton:
+                                size_hint_y: None
+                                height: '50dp'
+                                icon: "face-agent"
+                                on_press: root.manager.current = 'croprecommendation'
+                            MDLabel:
+                                text:"Crop Recommendation"
+                    MDSeparator:
+
+                MDBoxLayout:
+                    adaptive_height: True
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        adaptive_height: True
+                        padding: dp(10)
+                        id: timeline
+                        md_bg_color : 0.96, 0.96, 0.96, 1
+
+<Circle@MDCard>
+    size_hint: None, None
+    elevation: 0
+    pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+<CircularAvatarImage>
+    size_hint: None, None
+    size: 62, 100
+    elevation: 0
+
+    MDRelativeLayout:
+        size_hint: None, None
+        size: 60, 100
+
+        Circle:
+            radius: [50, ]
+            size: 60, 60
+            md_bg_color: 1,0,0,1
+
+        Circle:
+            radius: [50, ]
+            size: 55, 55
+            md_bg_color: 1,1,1,1
+
+        FitImage:
+            source: root.avatar
+            size_hint: None, None
+            size: 53, 53
+            radius: [53]
+            pos_hint: {"center_x":0.5, "center_y":0.6}
+
+        MDLabel:
+            text: root.name
+            halign: 'center'
+            pos_hint: {"center_x:": 0.5, "center_y": 0.2}
+            font_size: 11
+            theme_text_color: "Custom"
+            text_color: 0,0,0,1
+
+<PostCard>
+    id:root.id
+    orientation: 'vertical'
+    size_hint_y: None
+    height: "300dp"
+    spacing: 2
+    padding:dp(10)
+    elevation: 0.5
+    md_bg_color: 1,1,1,0.9
+
+    MDSeparator:
+    MDBoxLayout:
+        padding: 2
+        adaptive_height: True
+
+        OneLineAvatarListItem:
+            text: f'[b][size=14]{root.username}[/size][/b]'
+            divider: None
+            _no_ripple_effect: True
+
+            ImageLeftWidget:
+                source: root.avatar
+                radius: [20, ]
+    MDSeparator:
+    Image:
+        source: root.post
+    MDSeparator:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 5,0,0,0
+        spacing: 3
+        adaptive_height: True
+        MyLabel:
+            text: f'{root.likes} likes'
+            bold: True
+
+        MyLabel:
+            markup: True
+            text: f'[b]{root.username}[/b] {root.caption}'
+    MDBoxLayout:
+        padding: 9,0,0,0
+        spacing: 0
+        adaptive_height: True
+
+        HalfOpacityLabel:
+            font_size: 10
+            text: f'{root.posted_ago} agp'
+    MDSeparator:
+
+<MyLabel@MDLabel>
+    adaptive_height:True
+    font_size: 12
+
+<HalfOpacityLabel@MyLabel>:
+    theme_text_color: 'Custom'
+    text_color: 0,0,0,0.5
+
+
+<FertilizerScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: '10dp'
+        padding: '20dp'
+        pos_hint: {"center_x": 0.5, "center_y": 0.65}
+        size_hint_y: None
+        height: "600dp"
+        MDLabel:
+            text: "Fertilizer Calculator"
+            theme_text_color: "Primary"
+            halign: "center"
+            bold: True
+            font_style: "H5"
+            size_hint_y: None
+            height: '50dp'
+            padding: "10dp"
+            pos_hint_y: '100dp'
+        MDLabel:
+            text: "Enter Plant Area (sq meters):"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: "8dp"
+            halign: "left"
+        MDTextField:
+            id: plant_area
+            hint_text: "Area (sq meters)"
+            size_hint_y: None
+            height: "10dp"
+            mode: "rectangle"
+            input_filter: 'int'
+            helper_text: "Please enter a valid number"
+            helper_text_mode: "on_focus"
+        
+        MDLabel:
+            text: "Enter Soil Type:"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: "8dp"
+            halign: "left"        
+        MDTextField:
+            id: soil_type
+            hint_text: "Soil Types"
+            size_hint_y: None
+            height: "10dp"
+            mode: "rectangle"
+            helper_text: "Select the soil type"
+            helper_text_mode: "on_focus"
+            on_text: root.on_search_soil(self.text)
+        MDScrollView:
+            id: scroll
+            size_hint_y: None
+            height: "5dp"
+            MDList:
+                id: soil_results
+
+        MDRaisedButton:
+            id: fert_button
+            text: "Calculate Fertilizer"
+            bold:True
+            size_hint: None, None
+            size: "250dp", "60dp"
+            pos_hint: {"center_x": 0.5}
+            on_release: root.calculate_fertilizer()
+            elevation: 2
+            md_bg_color: 0.2, 0.8, 0.2, 1 
+            disabled:True        
+        MDLabel:
+            id: result_label
+            text: ""
+            theme_text_color: "Custom"
+            text_color: 1, 0, 0, 1 
+            halign: "center"
+            font_style: "H6"
+            size_hint_y: None
+            height: "20dp"
+        
+        MDLabel:
+            id: fertilizer_type_label
+            text: ""
+            theme_text_color: "Custom"
+            text_color: 0, 0.3, 0, 0.7
+            halign: "center"
+            font_style: "Body1"
+            size_hint_y: None
+            height: "20dp"
+        
+        MDIcon:
+            id: fertilizer_icon
+            icon: ""
+            theme_text_color: "Custom"
+            text_color : 0,1,0,1
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {"center_x": 0.5}
+            padding: "10dp"
+
+<CropsDiseaseScreen>:
+    MDFloatLayout:
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 1
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: '56dp'
+
+                MDLabel:
+                    text: '   Crops Diseases'
+                    font_style: 'H6'
+                    halign: 'left'
+                    size_hint_x: 0.8
+
+            ScrollView:
+                MDList:
+                    id: disease_list
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+
+<AlertScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '56dp'
+            MDLabel:
+                text: ' Alert Crops Diseases'
+                font_style: 'H6'
+                halign: 'left'
+                size_hint_x: 0.8
+        ScrollView:
+            MDList:
+                id: alert_list
+
+<SelectCrop>: #Cultivation Tips
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(10)
+        padding: dp(10)
+        MDLabel:
+            text: "Select your crop"
+            halign: "center"
+            font_style: "H5"
+            size_hint_y: None
+            height: dp(20)
+        ScrollView:
+            id: crop_box
+            size_hint: (1, None)
+            height: 0
+            MDList:
+                id: crop_box_results
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: dp(10)
+                padding: dp(10)
+                MDLabel:
+                    text: "All Crops"
+                    theme_text_color: "Primary"
+                    halign: "left"
+                    font_style: "H6"
+                    padding: dp(10), dp(10)
+                MDSpinner:
+                    id: spinner
+                    size_hint: None, None 
+                    size: dp(30), dp(30) 
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5} 
+                    active: True
+                MDGridLayout:
+                    cols: 2
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(10)
+                    padding: dp(10)
+                    id: cropCollections
+
+<CropDetails>:
+    MDScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            orientation:'vertical'
+            padding :10
+            spacing :1
+            size_hint_y: None
+            height: self.minimum_height
+            MDSpinner:
+                id: spinner
+                size_hint: None, None 
+                size: dp(30), dp(30) 
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5} 
+                active: True
+
+            MDBoxLayout:
+                id: info
+                orientation: 'vertical'
+                padding: 10
+                spacing: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+<CropRecommendation>:
+    MDScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing:10
+            size_hint_y: 1.2
+            MDLabel:
+                text: "Crop Recommendation"
+                halign: "center"
+                font_style: "H5"
+                size_hint_y: None
+                height: dp(20)
+            MDTextField:
+                id: location_field
+                hint_text: "Enter the location"
+                pos_hint: {"center_x": 0.5}
+                size_hint_x: 0.9
+                mode: "rectangle"
+                height: '18dp'
+                on_text: root.on_search_text(self.text, 'location')
+                icon_right: "map-marker"
+                icon_right_color: app.theme_cls.primary_color
+            ScrollView:
+                id: location
+                size_hint: (1, None)
+                height: 1
+                MDList:
+                    id: location_search_results
+
+            MDTextField:
+                id: weather_type_field
+                hint_text: "Enter the weather type"
+                pos_hint: {"center_x": 0.5}
+                size_hint_x: 0.9
+                mode: "rectangle"
+                icon_right: "cloud-outline"
+                on_text: root.on_search_text(self.text, 'weather_type')
+                icon_right_color: app.theme_cls.primary_color
+                disabled: 'True'
+            ScrollView:
+                id: weather_type
+                size_hint: (1, None)
+                height: 1
+                MDList:
+                    id: weather_type_search_results  
+
+            MDTextField:
+                id: soil_type_field
+                hint_text: "Enter the soil type"
+                pos_hint: {"center_x": 0.5}
+                size_hint_x: 0.9
+                mode: "rectangle"
+                icon_right: "filter-outline"
+                on_text: root.on_search_text(self.text, 'soil_type')
+                icon_right_color: app.theme_cls.primary_color
+                disabled: 'True'
+            ScrollView:
+                id: soil_type
+                size_hint: (1, None)
+                height: 1
+                MDList:
+                    id: soil_type_search_results 
+            MDRaisedButton:
+                id: submit_button
+                style: "filled"
+                text:'SUBMIT'
+                halign:'center'
+                disabled: 'True'
+                on_press:root.show_result()
+            MDLabel:
+                id: result
+                text: "......"
+                font_size:'16'
+                color:0,1,0,1
+                halign:'center'
+            MDWidget:       
+
+<WeatherInfo>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            id:label
+            text:"Click the refresh Button"
+            font_size: '15dp'
+            size_hint_y: None
+            height: '15dp'
+            bold:True
+            halign: 'center'
+            valign: 'middle'
+            color: 1, 0, 1, 1
+        ScrollView:
+            MDBoxLayout:
+                id: table_container
+                orientation: 'vertical'
+
+        MDRaisedButton:
+            text: 'Refresh'
+            pos_hint: {'center_x': 0.5}
+            size_hint:0.5,0.05
+            font_size: '16dp'
+            on_release: root.refresh_weather()
+
+<SearchScreen>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDTextField:
+            id: search_field
+            hint_text: "Search"
+            pos_hint: {"center_x": 0.5}
+            size_hint_x: 0.9
+            mode: "rectangle"
+            on_text: root.on_search_text(self.text)
+            icon_right: "magnify"
+            icon_right_color: app.theme_cls.primary_color
+            font_size: "18sp"
+
+        ScrollView:
+            MDList:
+                id: search_results
+
+<ShoppingScreen>:
+    MDScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            id: shop
+            orientation: "vertical"
+            padding: dp(5)
+            adaptive_height: True
+
+<CreatePostScreen>:
+    name:'createpost'
+    MDLabel:
+        text:'Welcome'
+<ProductDetailScreen>:
+    name: "product_detail"
+    ScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            id: pl
+            orientation: 'vertical'
+            padding: dp(16)
+            spacing: dp(10)
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDLabel:
+                id: product_label
+                text: ""
+                halign: "center"
+                font_style: "H5"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Image:
+                id: product_image
+                source: ""
+                size_hint: (None, None)
+                size: (200, 200)
+                pos_hint: {"center_x": 0.5}
+
+            MDLabel:
+                id: product_mrp
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: product_benefits
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: product_content
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20)]
+
+            MDLabel:
+                id: product_crops
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: product_formulation
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: product_way
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: product_contact
+                text: ""
+                halign: "left"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+<NotificationScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        MDLabel:
+            id:l
+            text: "Notifications"
+            halign: "center"
+            theme_text_color: "Primary"
+            font_style: "H3"
+        ScrollView:
+            do_scroll_y: True
+            MDList:
+                id: notification_list
+                OneLineIconListItem:
+                    text:"New message from self"
+                OneLineIconListItem:
+                    text:"New Update Available"
+                OneLineIconListItem:
+                    text:"New message from Yogi"
+
+<MainSchemeDetailScreen>:
+    name:'mainscheme'
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: "Farmer Schemes List"
+            md_bg_color: 0, 0.6, 0, 0.1
+        MDScrollView:
+            MDBoxLayout:
+                id: scheme_list
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+<SchemeDetailScreen>:
+    name:'schemedetail'
+    id: scheme_detail_screen
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        MDScrollView:
+            MDLabel:
+                id: scheme_details_label
+                text: ''
+                markup: True
+                font_size: '16sp'
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                color: 0, 0, 0, 1
+
+<ProfileMainScreen>:
+    name:'profile_main'
+    MDScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing: 10
+            size_hint_y: 1.2
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '200dp'
+                padding: 10
+                MDCircularLayout:
+                FitImage:
+                    id: profile_img
+                    size_hint: (None, None)
+                    size: ('100dp', '100dp')
+                    pos_hint: {'center_x': 0.5}
+                    allow_stretch: True
+                    keep_ratio: False
+                MDLabel:
+                    id: name
+                    font_size: '20sp'
+                    size_hint_y: None
+                    height: '30dp'
+                    bold: True
+                    halign: 'center'
+                    pos_hint: {'center_x': 0.5}
+                MDLabel:
+                    id: email
+                    font_size: '16sp'
+                    size_hint_y: None
+                    height: '30dp'
+                    halign: 'center'
+                    pos_hint: {'center_x': 0.5}
+            MDGridLayout:
+                cols: 2
+                spacing: 5
+                padding: 10
+                MDLabel:
+                    text: 'Mobile:'
+                    size_hint_y: None
+                    size_hint_x:None
+                    width:'60dp'
+                    height: '40dp'
+                TextInput:
+                    id:mobile
+                    text: ''
+                    size_hint_y: None
+                    height: '40dp'
+                    readonly: True
+                MDLabel:
+                    text: 'Address:'
+                    size_hint_y: None
+                    height: '40dp'
+                    size_hint_x:None
+                    width:'60dp'
+                TextInput:
+                    id:address
+                    text: ''
+                    size_hint_y: None
+                    height: '40dp'
+                    readonly: True
+                MDLabel:
+                    text: 'Pincode:'
+                    size_hint_y: None
+                    height: '40dp'
+                    size_hint_x:None
+                    width:'65dp'
+                TextInput:
+                    id:pincode
+                    text: ''
+                    size_hint_y: None
+                    height: '40dp'
+                    readonly: True
+                MDRaisedButton:
+                    text: 'Edit Profile'
+                    on_press: root.manager.current="updateprofile"
+    
+<UpdateProfileScreen>:
+    name:'updateprofile'
+    ScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(20)
+            spacing: dp(10)
+            size_hint_y:1.5
+            FloatLayout:
+                Image:
+                    id: profile_img2
+                    elevation:5
+                    size_hint: (None, None)
+                    size: (dp(120), dp(120))
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    allow_stretch: True
+                    keep_ratio: False
+                    canvas.before:
+                        Ellipse:
+                            pos: self.pos
+                            size: self.size
+                MDRaisedButton:
+                    text: 'Change Photo'
+                    size_hint_y: None
+                    height: dp(40)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    on_press: root.change_photo()
+            MDTextField:
+                id: name2
+                hint_text: "Enter your name"
+                mode: "rectangle"
+                readonly: True
+            MDTextField:
+                id: email2
+                hint_text: "Enter your email"
+                mode: "rectangle"
+                helper_text_mode: "on_focus"
+            MDTextField:
+                id: mobile2
+                hint_text: "Mobile Number"
+                mode: "rectangle"
+                helper_text_mode: "on_focus"
+            MDTextField:
+                id: address2
+                hint_text: "Location"
+                mode: "rectangle"
+                helper_text_mode: "on_focus"
+            MDTextField:
+                id: pincode2
+                hint_text: "Pincode"
+                mode: "rectangle"
+                helper_text_mode: "on_focus"
+            MDBoxLayout:
+                size_hint_y: None
+                height: dp(50)
+                spacing: dp(10)
+                MDRaisedButton:
+                    text: 'Save Changes'
+                    on_press: root.update_profile()
+                MDFlatButton:
+                    text: 'Cancel'
+                    on_press: root.manager.current='profile_main'
+
+<ChatBox>:
+    name: "chat"
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 5
+        MDScrollView:
+            id: chat_scroll
+            MDBoxLayout:
+                id: chat_box
+                orientation: 'vertical'
+                padding: 10
+                spacing: 1
+                size_hint_y: None
+                height: self.minimum_height
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: "20dp"
+            padding: 3
+            MDScrollView:
+                do_scroll_x: True
+                scroll_type: ['content']     
+                MDBoxLayout:
+                    id: button_box
+                    size_hint: (None, 1)
+                    width: self.minimum_width
+                    spacing: 2
+        MDBoxLayout:
+            id: message_box
+            size_hint_y: None
+            height: "40dp"
+            TextInput:
+                id: message_input
+                size_hint_x: 0.8
+                height: "40dp"
+                multiline: True
+                hint_text: "Type your message..."
+            Button:
+                text: "Send"
+                size_hint_x: 0.2
+                on_press: root.send_message()
+
+<Setting>:
+    name:'settings'
+    MDLabel:
+        text:'Settings'
+
+<FeedBack>:
+    name:'feedback'
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "10dp"
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Feedback"
+            theme_text_color: "Primary"
+            halign: "center"
+            font_style: "H4"
+            bold: True
+            size_hint_y:0.2
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: "10dp"
+                spacing: "15dp"
+                MDTextField:
+                    id: name_field
+                    hint_text: "Enter your name"
+                    helper_text: "*Name is required"
+                    helper_text_mode: "on_error"
+                    size_hint_y: None
+                    height: "40dp"
+                    required: True
+                MDTextField:
+                    id: email_field
+                    hint_text: "Enter your email"
+                    size_hint_y: None
+                    height: "40dp"
+                MDTextField:
+                    id: message_field
+                    hint_text: "Enter your message"
+                    helper_text: "*Message is required"
+                    helper_text_mode: "on_error"
+                    size_hint_y: None
+                    height: "100dp"
+                    multiline: True
+                    required: True
+                MDRaisedButton:
+                    text: "Submit"
+                    size_hint: None, None
+                    size: "200dp", "50dp"
+                    pos_hint: {"center_x": 0.5}
+                    on_release: root.submit_form()
+
+<ContactUs>:
+    name:'contactus'
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "10dp"
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Contact Us"
+            theme_text_color: "Primary"
+            halign: "center"
+            font_style: "H4"
+            size_hint_y:None
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: "10dp"
+                spacing: "15dp"
+                MDTextField:
+                    id: name_field
+                    hint_text: "Enter your name"
+                    helper_text: "Name is required"
+                    helper_text_mode: "on_error"
+                    size_hint_y: None
+                    height: "40dp"
+                    required: True
+                MDTextField:
+                    id: email_field
+                    hint_text: "Enter your email"
+                    helper_text: "Email is required"
+                    helper_text_mode: "on_error"
+                    size_hint_y: None
+                    height: "40dp"
+                    required: True
+                MDTextField:
+                    id: message_field
+                    hint_text: "Enter your message"
+                    helper_text: "Message is required"
+                    helper_text_mode: "on_error"
+                    size_hint_y: None
+                    height: "100dp"
+                    multiline: True
+                    required: True
+                MDRaisedButton:
+                    text: "Submit"
+                    size_hint: None, None
+                    size: "200dp", "50dp"
+                    pos_hint: {"center_x": 0.5}
+                    on_release: root.submit_form()
+
+<LegalNotice>:
+    name:'legalnotice'
+    BoxLayout:
+        orientation: "vertical"
+        MDScrollView:
+            MDLabel:
+                id:legalnotice_text
+                theme_text_color: "Secondary"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: "10dp"
+                halign: "left"
+
+<Budgeting>:
+    name:'budget'
+    MDScrollView:
+        do_scroll_y: True
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: dp(20)
+            spacing: dp(10)
+            size_hint_y:1.3
+
+            MDLabel:
+                id: header_label
+                text: "Crop Budget Management"
+                bold : True
+                color: 0.1 , 1 , 0 , 0.9
+                halign: "center"
+                font_style: "H6"
+
+            MDTextField:
+                id: farm_size
+                hint_text: "How many acres i.e land in your farm?"
+                helper_text: "e.g., 10"
+                helper_text_mode: "on_focus"
+                input_filter: "float"
+
+            MDTextField:
+                id: yield_per_acre
+                hint_text: "How much crop is produced per acre?\n(in quintals)"
+                helper_text: "e.g., 2"
+                helper_text_mode: "on_focus"
+                input_filter: "float"
+
+            MDTextField:
+                id: selling_price
+                hint_text: "How much do you sell one quintal ? \n(100 kg) of your crop for? (in ₹)"
+                helper_text: "e.g., 2000 (for wheat, maize) or more for other crops"
+                helper_text_mode: "on_focus"
+                input_filter: "float"
+
+            MDTextField:
+                id: total_expenses
+                hint_text: "Total Expenses (INR):\n(All costs for the season,Include seeds, labor, etc in ₹)"
+                helper_text: "e.g., 30000"
+                helper_text_mode: "on_focus"
+                input_filter: "float"
+
+            MDRaisedButton:
+                text: "Calculate Budget"
+                pos_hint: {"center_x": 0.5}
+                size_hint_y: None
+                height: dp(50)
+                on_release: root.calculate_budget()
+
+            MDLabel:
+                id: production_label
+                text: "Total Production: 0 quintals"
+                halign: "center"
+                font_style: "Subtitle1"
+                bold : True
+                size_hint_y: None
+                height: dp(40)
+
+            MDLabel:
+                id: revenue_label
+                text: "Total Money Earned (Revenue): ₹0.00"
+                halign: "center"
+                font_style: "Subtitle1"
+                color: 0.5 , 0.5 , 0 , 0.7
+                size_hint_y: None
+                bold : True
+                height: dp(40)
+
+            MDLabel:
+                id: profit_label
+                text: "Net Profit/Loss: ₹0.00"
+                halign: "center"
+                font_style: "H6"
+                size_hint_y: None
+                height: dp(40)
+
+<HelpSupport>:
+    name:'helpsupport'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "20dp"
+        ScrollView:
+            MDGridLayout:
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                
+                MDCard:
+                    size_hint: None, None
+                    size: "280dp", "90dp"
+                    pos_hint: {"center_x": 0.5}
+                    orientation: 'vertical'
+                    padding: "10dp"
+                    
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: "How can we help you?"
+                            theme_text_color: "Secondary"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                        
+                        MDLabel:
+                            text: "1. Frequently Asked Questions"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            text: "2. Report an issue"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                MDCard:
+                    size_hint: None, None
+                    size: "280dp", "90dp"
+                    pos_hint: {"center_x": 0.5}
+                    orientation: 'vertical'
+                    padding: "10dp"
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: "Contact Us"
+                            theme_text_color: "Secondary"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            text: "Email: support@cropcare.com"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            text: "Phone: +916391348273"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                        
+                MDCard:
+                    size_hint: None, None
+                    size: "280dp", "200dp"
+                    pos_hint: {"center_x": 0.5}
+                    orientation: 'vertical'
+                    padding: "10dp"
+                    MDScrollView:
+                        do_scroll_y:True
+
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            MDLabel:
+                                text: "Feedback Form"
+                                theme_text_color: "Secondary"
+                                size_hint_y: None
+                            MDTextField:
+                                id:name
+                                hint_text: "Your Name "
+                                size_hint_y: None
+                                height: "80dp"
+                                multiline: True
+                            
+                            MDTextField:
+                                id:feedback_msg
+                                hint_text: "Your Feedback"
+                                size_hint_y: None
+                                height: "80dp"
+                                multiline: True
+
+                            MDRaisedButton:
+                                text: "Submit"
+                                on_release: root.submit_feedback()
